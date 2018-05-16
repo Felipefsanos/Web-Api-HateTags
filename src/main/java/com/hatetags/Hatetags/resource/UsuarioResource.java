@@ -1,8 +1,7 @@
 package com.hatetags.Hatetags.resource;
 
-import com.hatetags.Hatetags.models.Tweet;
-import com.hatetags.Hatetags.repository.TweetRepository;
-
+import com.hatetags.Hatetags.models.Usuario;
+import com.hatetags.Hatetags.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -12,39 +11,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tweets")
-public class TweetResource {
+@RequestMapping("/usuarios")
+public class UsuarioResource {
 
     @Autowired
-    private TweetRepository tweetRepository;
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<?> findAll(){
 
-         List<Tweet> tweets = tweetRepository.findAll();
-         return new ResponseEntity<>(tweets,HttpStatus.OK);
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return new ResponseEntity<>(usuarios,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
 
-        Tweet tweet = tweetRepository.getOne(id);
-        if(tweet == null){
+        Usuario usuario = usuarioRepository.getOne(id);
+        if(usuario == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(tweet, HttpStatus.OK);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Tweet tweet){
+    public ResponseEntity<?> save(@RequestBody Usuario usuario){
 
-        if (tweet.getId() != 0){
+        if (usuario.getId() != 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        tweet = tweetRepository.save(tweet);
+        usuario = usuarioRepository.save(usuario);
 
-        return new ResponseEntity<>(tweet,HttpStatus.CREATED);
+        return new ResponseEntity<>(usuario,HttpStatus.CREATED);
 
     }
 
@@ -52,7 +51,7 @@ public class TweetResource {
     public ResponseEntity<?> delete(@PathVariable("id") Long id){
 
         try {
-            tweetRepository.deleteById(id);
+            usuarioRepository.deleteById(id);
 
         }catch (EmptyResultDataAccessException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,8 +1,8 @@
 package com.hatetags.Hatetags.repository;
 
-import com.hatetags.Hatetags.models.Tweets;
+import com.hatetags.Hatetags.models.Tweet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TweetRepository extends JpaRepository<Tweets, Long> {
+public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
 }
